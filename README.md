@@ -1,73 +1,69 @@
 # AgentMart Studio
 
-A voice-guided marketplace experience built by Shanto Mathew. Browse twelve fictional capabilities, compare two products, save a shortlist, explore local agent settings, and ask **M**, the voice guide, to navigate or change the interface.
+**A voice-guided marketplace experience with constrained actions and durable usage accounting.** Built by Shanto Mathew.
 
-[Open the public experience](https://agentmart-live-shanto.netlify.app/)
+[Try the live experience](https://agentmart-live-shanto.netlify.app/) · [Explore the action policy](netlify/functions/policy.mts) · [Verification](docs/VERIFICATION.md)
 
-The catalog, prices, acquisitions, budgets and seller drafts are illustrative. The voice conversation and constrained page actions use a real provider when configured and admitted by the application budget. There are no actual purchases, payments, subscriptions, accounts, seller submissions, delivery or provisioning in this Studio experience.
+![AgentMart Studio catalog with explicit voice start](docs/screenshots/catalog.png)
 
-## Try it
+*Actual production screenshot. All twelve products and prices are fictional. The voice guide is a real provider integration; purchases, agent budgets and seller submissions are local demonstrations.*
 
-1. Search or filter the catalog and inspect a product.
-2. Compare two capabilities or try the clearly labeled demo acquisition.
-3. Select the small **Talk to M** avatar to start voice. Grant microphone permission if requested.
-4. Ask “Show me APIs” or “Change the theme to rose” and inspect the resulting page change.
-5. Click the active avatar to mute/unmute; press Escape to end the conversation.
+## Review it in two minutes
 
-Opening the page does not start a voice session. Voice requires supported browser audio, available provider access and sufficient application allowance. Catalog controls remain available if voice cannot start. Guide actions stay within this visitor's interface; the guide cannot edit source, deploy code or initiate commerce.
+Browse the catalog, compare two products, or select **Talk to M** to start voice. Ask “Show me APIs,” then inspect the visible filter result. Click the active avatar to mute/unmute and press Escape to end. Opening the page does not request the microphone or start a paid session.
 
-## Architecture
+A September 14, 2026 production test sent synthetic speech through real WebRTC. The planner returned catalog navigation and an API filter; the actual page displayed **Openfield, Trace and Relay**, and the guide spoke about those results. Provider closure and ended audio tracks were verified. The catalog remains usable without voice availability.
+
+## What I built
+
+- **A complete product exploration flow:** search, categories, sorting, product details, saved items, two-item comparison, local acquisition review and seller preview.
+- **A constrained voice action bridge:** bounded context and planner output become validated navigation, filters, themes and short visual effects. Model output cannot execute arbitrary code or publish changes.
+- **An explicit voice lifecycle:** click-to-start, mute, reconnect, Escape/end, inactivity handling and server-side watchdog closure.
+- **Conservative spend admission:** a durable ledger reserves capacity before sessions, uses atomic updates and retains uncertain usage rather than silently refunding it.
+
+## Cloud and data architecture
 
 ```mermaid
 flowchart LR
-  Browser[Catalog and voice avatar] --> API[Netlify admission API]
-  API --> Ledger[Netlify Blobs budget ledger]
-  API --> Voice[Provider WebRTC session]
-  Voice --> Planner[Bounded Responses planner]
+  UI[Static catalog and voice avatar] --> API[Netlify Functions: admission and session API]
+  API --> Ledger[(Netlify Blobs: budget and session metadata)]
+  UI --> Voice[Provider WebRTC audio]
+  UI --> Planner[Bounded Responses planner]
   Planner --> Policy[Validated action policy]
-  Policy --> UI[Allowlisted browser actions]
-  Watchdog[Server watchdog] --> Voice
+  Policy --> UI
+  Watchdog[Netlify background watchdog] --> Voice
 ```
 
-- `public/app.js`: fictional catalog, comparisons, local resources, agent settings and seller preview.
-- `public/site-guide.js`: page context, validated UI actions, session customization and undo/reset.
-- `public/voice.js`: explicit voice start, WebRTC lifecycle, avatar and browser audio cleanup.
-- `netlify/functions/api.mts`: admission, bounded planner requests and capability-protected session operations.
-- `netlify/functions/budget.mts`: atomic reservations and conservative settlement using integer microdollars.
-- `netlify/functions/watchdog-background.mts`: authenticated sideband watchdog and provider closure.
-- `netlify/functions/policy.mts`: validation of context, actions and capabilities.
-- `site-context.json`: trusted fictional catalog descriptions; it is not live seller inventory.
+The application is hosted on **Netlify**: static assets, TypeScript functions, a background watchdog and **Netlify Blobs**. It does not use an application-managed AWS database or commerce backend in this Studio variant.
 
-The avatar responds to measured incoming audio energy. It is not phoneme-level lip synchronization. The planner cannot return executable HTML/JavaScript or arbitrary styling. State is local browser/session state, not a durable multi-user commerce database.
+| Data / responsibility | Implementation and lifetime |
+| --- | --- |
+| Admission ledger | [Budget module](netlify/functions/budget.mts): integer microdollars, strong reads and conditional writes preserve reservations across function invocations |
+| Voice session records | [API](netlify/functions/api.mts) and [watchdog](netlify/functions/watchdog-background.mts): provider metadata, hashed capabilities, deadlines and closure/usage evidence |
+| Catalog and acquisition preview | [Catalog UI](public/app.js): fictional records and local browser state, not an order database |
+| Themes, guide context and undo | [Page bridge](public/site-guide.js): bounded visitor interface state with tab-scoped customization |
+| Allowed model actions | [Policy validation](netlify/functions/policy.mts): trusted targets, explicit value limits and no executable model-supplied HTML/JavaScript |
 
-## Run and verify
+The server ledger is durable; the marketplace demonstration is not a persistent multi-user account system. No real login, payment, subscription, seller submission, delivery or provisioning occurs here. Provider credentials remain server-side. Audio is sent to the provider while connected; no blanket zero-retention claim is made.
 
-Use Node.js 22 and npm.
+## Run locally
 
-```bash
+Use Node.js 22 and npm. These checks make no paid provider requests.
+
+```sh
 npm ci
 npm run verify
-npm audit --omit=dev
-```
-
-These local checks do not make paid provider requests. For a static catalog preview without functions:
-
-```bash
 python3 -m http.server 8080 --directory public
 ```
 
-The static preview supports catalog controls; voice requires the deployed Netlify functions and configuration.
+The static preview supports catalog controls. Live voice requires Netlify functions, your own provider access, a random watchdog secret and the correct HTTPS origin. [Setup and configuration](docs/SETUP.md) covers those requirements and the generic [.env.example](.env.example).
 
-To deploy your own instance, use this repository's `netlify.toml`: publish only `public/`, with `netlify/functions/` deployed as functions. Set your own `OPENAI_API_KEY`, random `WATCHDOG_SECRET` and exact HTTPS `SITE_ORIGIN` through protected runtime configuration. Never place values in public assets or source control. The source currently requests `gpt-live-1` for voice and `gpt-5.6-luna` for the planner; your provider account must support those interfaces.
+The existing public site uses a $14 AgentMart allocation within a $30 combined AgentMart/portfolio allowance. Availability changes with usage. These application reservations are not a provider invoice or account-wide hard cap. Do not reset its ledger, duplicate paid deployments to bypass the allowance or assume this approval applies to a new instance.
 
-The existing public site was authorized for a $14 AgentMart allocation within a combined $30 AgentMart/portfolio allowance. Current remaining availability is reported dynamically by `/api/health`; these are application reservations, not a provider invoice or account-wide hard cap. This source publication does not increase that allowance.
+## Verified behavior
 
-Review and explicitly authorize your own budget before enabling paid access. Budget settings are `LIVE_TOTAL_APPROVED_USD`, `LIVE_AGENTMART_BUDGET_USD` and `LIVE_PORTFOLIO_BUDGET_USD`. The validation supports fixed combined tiers and reserves development headroom. Do not reuse this project's approval as authorization for your own usage, reset an existing ledger, or create a fresh paid deployment to bypass existing reservations. Missing provider configuration leaves voice unavailable.
+The release passed **48 local tests**, build/type checking and a zero-vulnerability production npm audit. Final production automation passed **18 grouped catalog checks** and **seven real voice checks**, including a visible spoken filter result, mute/unmute and provider/media shutdown. Desktop/mobile layouts and security headers were checked. Native Chrome separately exercised selected catalog workflows and the explicit-start state; it did not test physical-microphone speech accuracy. See [the dated evidence scope](docs/VERIFICATION.md).
 
-## Limits and provenance
+![Actual API catalog after a real spoken filter request](docs/screenshots/voice-filter-result.png)
 
-This is a standalone publication of reviewed personal source, not the private AgentMart operational commerce repository or its history. The original private project remains separate. An application admission envelope is not a provider-account hard billing cap; unknown closure/usage retains conservative reservations. Current source allows a maximum ten-minute session with a three-minute inactivity cutoff. Browser, provider and network failures may end a session earlier. Short-call validation does not certify ten elapsed minutes of voice behavior.
-
-The public experience includes a real voice integration and local marketplace demonstrations. Authentication, payment rails, subscriptions, shipping, provisioning and enterprise availability are outside this Studio's scope. Optional visual effects are temporary and respect reduced-motion preferences. Provider retention and account availability are governed by the provider; no blanket zero-retention claim is made.
-
-[Verification record](docs/VERIFICATION.md) distinguishes local checks, fresh production browser evidence and historical voice testing. Screenshots should depict only fictional catalog state and synthetic test inputs.
+The avatar responds to measured incoming audio energy, not phoneme-level lip synchronization. A ten-minute configured ceiling is not proof of a ten-minute tested conversation. This repository publishes reviewed personal Studio source and clean synthetic screenshots; the original private commerce repository and runtime records remain private.
