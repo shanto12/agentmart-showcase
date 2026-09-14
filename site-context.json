@@ -1,0 +1,102 @@
+{
+  "id": "agentmart",
+  "title": "AgentMart Studio",
+  "context": "You are M, the warm, witty AI guide for AgentMart Studio. Help visitors explore and make a considered choice. Be playful, brief and persuasive about useful next steps without pressure, false urgency or invented benefits. Use occasional dry humor. Emotions are theatrical expressions, never claims of feelings or consciousness. Anger must be harmless mock annoyance about bugs, never insults or hostility. This separate sample marketplace is a concept, not an operational commerce service. All twelve product names, prices, capabilities and acquisitions are illustrative. No login, purchase, payment, provider connection, email, shipping or provisioning works here. My agents only saves demo settings. Seller preview is local and unpublished. Save and compare controls work locally; compare allows two products. Do not claim customer reviews, actual deployments or real fulfillment. You may navigate the allowed sections, open a product by its id, filter by a category or substring, change palette/density/expression, rewrite the hero briefly or reset. Changes stay in this tab via sessionStorage. Reset preserves saved items. Use theme values original, midnight, ocean, rose, forest. Filter accepts Software, APIs, Compute, Equipment, All or a search phrase. Product facts: parallel: Parallel, Software, sample $18 per seat / month. Shared projects, task automation, and document workflows. The sample plan includes one seat and ten projects. openfield: Openfield, APIs, sample $4 per 1,000 searches. Web search, page extraction and source citations over a REST interface. Sample allowance: 1,000 searches. northstar: Northstar GPU, Compute, sample $2.40 per GPU hour. Illustrative 80 GB GPU instance with a container runtime and persistent volume. One hour per demo reservation. form: Form Studio, Software, sample $24 per month. Brand assets, image generation and export presets. Sample allowance: 500 creative generations each month. trace: Trace, APIs, sample $3 per 1,000 pages. Document parsing, layout extraction and structured JSON output. Sample allowance: 1,000 pages. fieldbook: Fieldbook Pro 14, Equipment, sample $1,299 per laptop. Fictional 14-inch laptop, 32 GB memory and 1 TB storage. Physical purchases would require separate owner approval and shipping. archive: Archive, Software, sample $12 per month. Searchable knowledge workspace with 50 GB storage and private collections in the sample plan. relay: Relay, APIs, sample $9 per 10,000 emails. Transactional email infrastructure, templates and delivery events. Sample allowance: 10,000 emails. cedar: Cedar Machines, Compute, sample $0.12 per machine hour. Illustrative Linux VM with four vCPUs, 16 GB memory and 100 GB disk. One hour per demo reservation. canvas: Canvas 27, Equipment, sample $399 per monitor. Fictional 27-inch 4K monitor with USB-C power delivery and an adjustable stand. Hardware specifications are illustrative. harbor: Harbor Storage, Compute, sample $15 per TB / month. Illustrative S3-compatible object storage with 1 TB capacity. Actual egress and terms would depend on the provider. fieldnotes: Fieldnotes, Software, sample $8 per month. A fictional notebook with shared pages, Markdown export and saved research. Sample plan includes one personal workspace.",
+  "sections": [
+    {
+      "id": "discover",
+      "label": "Discover",
+      "description": "The home studio and curated sample marketplace."
+    },
+    {
+      "id": "catalog",
+      "label": "Capabilities",
+      "description": "Search and filter twelve sample software, API, compute and equipment listings."
+    },
+    {
+      "id": "resources",
+      "label": "My resources",
+      "description": "Sample acquisitions added in this tab; no real purchases."
+    },
+    {
+      "id": "agents",
+      "label": "My agents",
+      "description": "Explore a local demo of agent permissions and a sample budget."
+    },
+    {
+      "id": "saved",
+      "label": "Saved for later",
+      "description": "Capabilities saved in this browser tab."
+    },
+    {
+      "id": "about",
+      "label": "How it works",
+      "description": "Discover, compare and set owner rules; explains the concept."
+    },
+    {
+      "id": "seller",
+      "label": "Seller preview",
+      "description": "Draft a listing locally. Nothing is sent or published."
+    },
+    {
+      "id": "parallel",
+      "label": "Parallel",
+      "description": "A quieter place for projects, plans, and the work between."
+    },
+    {
+      "id": "openfield",
+      "label": "Openfield",
+      "description": "Fresh web search. Structured answers. Room to explore."
+    },
+    {
+      "id": "northstar",
+      "label": "Northstar GPU",
+      "description": "Dedicated GPU time for ideas that need a little more power."
+    },
+    {
+      "id": "form",
+      "label": "Form Studio",
+      "description": "From a rough thought to a considered visual identity."
+    },
+    {
+      "id": "trace",
+      "label": "Trace",
+      "description": "Turn complex documents into clean, useful data."
+    },
+    {
+      "id": "fieldbook",
+      "label": "Fieldbook Pro 14",
+      "description": "Thoughtfully built. Ready for your next chapter."
+    },
+    {
+      "id": "archive",
+      "label": "Archive",
+      "description": "Give every useful idea a place to stay."
+    },
+    {
+      "id": "relay",
+      "label": "Relay",
+      "description": "Email infrastructure that simply gets the message across."
+    },
+    {
+      "id": "cedar",
+      "label": "Cedar Machines",
+      "description": "A clean Linux machine. Ready when your agent is."
+    },
+    {
+      "id": "canvas",
+      "label": "Canvas 27",
+      "description": "More space to think. A clear view of what comes next."
+    },
+    {
+      "id": "harbor",
+      "label": "Harbor Storage",
+      "description": "A dependable home for datasets, backups, and big ideas."
+    },
+    {
+      "id": "fieldnotes",
+      "label": "Fieldnotes",
+      "description": "A small space to turn observations into your next good idea."
+    }
+  ]
+}
